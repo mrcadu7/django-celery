@@ -11,6 +11,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.conf.task_queues = [
     Queue('tasks', Exchange('tasks'), routing_key='tasks',
           queue_arguments={'x-max-priority': 10}),
+    Queue('dead_letter', routing_key='dead_letter')
 ]
 
 app.conf.task_acks_late = True
@@ -24,7 +25,7 @@ task_folder = os.path.join(base_dir, 'dcelery', 'celery_tasks')
 if os.path.exists(task_folder) and os.path.isdir(task_folder):
     task_modules = []
     for filename in os.listdir(task_folder):
-        if filename.startswith('ex-') and filename.endswith('.py'):
+        if filename.startswith('ex') and filename.endswith('.py'):
             module_name = f'dcelery.celery_tasks.{filename[:-3]}'
             # task_modules.append('dcelery.celery_tasks.' + filename[:-3]) ## talvez funcione, testar depois
             
