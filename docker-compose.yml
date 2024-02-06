@@ -30,7 +30,7 @@ services:
       - 8001:8000
     environment:
       - DEBUG=1
-      - SECRET_KEY=03asd4qwe15dsa50dwqd1sadwq2rf1
+      - SECRET_KEY=03asd4qwe15dsa50dwqd1sadwq2rf1 # Digitado randomicamente, em aplicações seguras isto não estaria assim por aqui
       - ALLOWED_HOSTS=localhost,127.0.0.1
     depends_on:
       - redis
@@ -39,7 +39,7 @@ services:
     container_name: celery1
     build:
       context: ./dcelery
-    command: celery --app=dcelery worker -l INFO -Q tasks,dead_letter -E
+    command: celery --app=dcelery worker -l INFO -Q tasks,dead_letter -E -B
     volumes:
       - ./dcelery:/usr/src/app/
     environment:
