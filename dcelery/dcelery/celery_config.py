@@ -7,8 +7,8 @@ from kombu import Queue, Exchange
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dcelery.settings')
 app = Celery('dcelery')
 app.config_from_object('django.conf:settings', namespace='CELERY')
-sentry_dsn = "https://229c162ea24bf642aeda0bc7c583d53d@us.sentry.io/4506695643824128"
-sentry_sdk.init(dsn=sentry_dsn, integrations=[CeleryIntegration()])
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
+sentry_sdk.init(dsn=SENTRY_DSN, integrations=[CeleryIntegration()])
 
 
 app.conf.task_queues = [
